@@ -8,7 +8,7 @@ hidden_directories = ['.', '..'];
 directories = [];
 switch (file) {
     case 'index':
-        directories = [...directories, 'photography'];
+        directories = [...directories, 'Photography', 'Projects'];
         break;
 }
 
@@ -60,19 +60,32 @@ function ls_a() {
     });
 }
 
+
+// Will Need To Adjust Logic of cat() and cd() slightly if adding .files
+function cat(command) {
+    cat_location = command.split(' ')[1];
+
+    if (section_ids.includes(cat_location)) {
+        window.location.replace(`./${path[path.length - 1]}#${cat_location}`);
+    } else if (cd_locations.includes(cat_location)) {
+        new_line_a(`cat: ${cat_location}: Is a directory`);
+
+    } else {
+        new_line_a(`cat: ${cat_location}: No such file or directory`);
+    }
+}
+
 function cd(command) {
     cd_location = command.split(' ')[1].replace(/^\/+|\/+$/g, '');
 
-    if (cd_locations.includes(cd_location)) {
+    if (section_ids.includes(cd_location)) {
+        new_line_a(`cd: ${cd_location}: Not a directory`);
+    } else if (cd_locations.includes(cd_location)) {
         if (cd_location === '..') {
             window.location.href = '../';
         } else if (directories.includes(cd_location)) {
             console.log(`./${cd_location}`);
             window.location.href = `./${cd_location}`;
-        } else if (section_ids.includes(cd_location)) {
-            window.location.replace(
-                `./${path[path.length - 1]}#${cd_location}`
-            );
         }
     } else {
         new_line_a(`cd: ${cd_location}: No such file or directory`);
@@ -80,7 +93,7 @@ function cd(command) {
 }
 
 function clear_output() {
-    document.querySelector('#shell-output').textContent = ''
+    document.querySelector('#shell-output').textContent = '';
 }
 
 function execute_command(command) {
@@ -93,24 +106,33 @@ function execute_command(command) {
         case 'ls':
             if (command === 'ls -a') {
                 ls_a();
+                ls();
             } else if (command === 'ls') {
                 ls();
             } else {
                 new_line(`command not found: ${command}`, 'error');
             }
             break;
+        case 'cat':
+            if (command.split(' ').length <= 2) {
+                cat(command);
+            } else {
+                new_line('cat: too many arguments', 'error');
+            }
+            break;
+
         case 'cd':
             if (command.split(' ').length <= 2) {
                 cd(command);
             } else {
-                new_line('cd: too many arguments', 'error')
+                new_line('cd: too many arguments', 'error');
             }
             break;
         case 'clear':
             if (command.split(' ').length == 1) {
                 clear_output();
             } else {
-                new_line('clear: too many arguments', 'error')
+                new_line('clear: too many arguments', 'error');
             }
             break;
 
@@ -139,11 +161,15 @@ function update_autocomplete(command) {
 
     if (command.startsWith('cd')) {
         suggested_location = [
-            ...section_ids,
             ...directories,
             ...hidden_directories,
         ].filter((location) => location.startsWith(command.split(' ')[1]))[0];
         autocomplete.textContent = `cd ${suggested_location || ''}`;
+    } else if (command.startsWith('cat')) {
+        suggested_location = [
+            ...section_ids,
+        ].filter((location) => location.startsWith(command.split(' ')[1]))[0];
+        autocomplete.textContent = `cat ${suggested_location || ''}`;
     } else {
         autocomplete.textContent = '';
     }
