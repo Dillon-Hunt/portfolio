@@ -1,0 +1,109 @@
+:root {
+    --color-primary-cta: #ff6b6c;
+    --color-secondary-cta: #ff9696;
+    --color-primary-accent: #6b59ec;
+    --color-secondary-accent: #788bff;
+
+    --page-padding: 20px 25vw 20px 25vw;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--color-secondary-bg);
+
+    /* background: -webkit-linear-gradient( */
+    /*     var(--color-primary-bg), */
+    /*     var(--color-secondary-bg) */
+    /* ); */
+
+    color: var(--color-secondary-fg);
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Roboto',
+        'Segoe UI',
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    margin: 0;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+a {
+    color: var(--color-primary-cta);
+}
+
+.centre {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.centre-v {
+    flex-direction: column;
+}
+
+.centre-h {
+    flex-direction: row;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.gradient-filled-text {
+    /*  background: -webkit-linear-gradient(
+        45deg,
+        var(--color-primary-cta),
+        var(--color-primary-accent)
+    ); */
+    background: -webkit-linear-gradient(
+        45deg,
+        var(--color-primary-accent),
+        var(--color-primary-cta)
+    );
+    color: var(--color-primary-cta);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Prefers light or no preference */
+@media (prefers-color-scheme: light) or (prefers-color-scheme: no-preference) {
+    :root {
+        --color-primary-fg: #272222;
+        --color-primary-bg: #ffffff;
+        --color-secondary-fg: #181f37 /* #121212; */
+        --color-secondary-bg: #eeeeee;
+
+        --color-heading-before: var(--color-primary-accent);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-primary-fg: #ededed;
+        --color-primary-bg: #10131c; /* #050505; */
+        --color-secondary-fg: #a8a8b9 /* #d4d4d8 */;
+        --color-secondary-bg: #0d0e14; /* #0D0D0D; */ /* #171C28; */
+
+        --color-heading-before: #26293a;
+    }
+}

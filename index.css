@@ -1,0 +1,222 @@
+/* Hero */
+
+main {
+    height: 100vh;
+    background-color: var(--color-primary-bg);
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 800;
+}
+
+.hero p {
+    font-size: 0.825rem;
+    font-weight: 300;
+    /*
+        font-size: 0.83rem;
+        font-weight: 200;
+        color: var(--color-primary-fg);
+    */
+}
+
+.hero .links {
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+}
+
+.link {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.link#github {
+    background-image: url('./assets/github-black.svg');
+}
+
+.link#instagram {
+    background-image: url('./assets/instagram-black.svg');
+}
+
+@media (prefers-color-scheme: dark) {
+    .link#github {
+        background-image: url('./assets/github-white.svg');
+    }
+
+    .link#instagram {
+        background-image: url('./assets/instagram-white.svg');
+    }
+}
+
+/* Article Stuff */
+article {
+    width: 100%;
+    padding: var(--page-padding);
+}
+
+section {
+    padding: 20px 0 0 0;
+}
+
+section h2 {
+    font-weight: 900;
+    font-size: 3rem;
+    position: relative;
+    color: var(--color-primary-fg)
+}
+
+section h2::before {
+    content: '~';
+    position: absolute;
+    left: -20px;
+    transform: translateX(-100%);
+    color: var(--color-heading-before)
+}
+
+section h2::after {
+    content: '.md';
+    color: var(--color-primary-accent)
+}
+
+section p.heading-comment {
+    position: absolute;
+    color: var(--color-heading-before)
+}
+
+section p.heading-comment .code-block {
+    background-color: var(--color-heading-before);
+    color: var(--color-secondary-bg);
+    border-radius: 4px;
+    padding: 0 3px;
+}
+
+section p.heading-comment::before {
+    content: '###';
+    position: absolute;
+    left: -20px;
+    transform: translateX(-100%);
+    color: var(--color-heading-before)
+
+}
+
+section p {
+    position: relative;
+    font-family: 'Fira Code', monospace;
+    /* font-family: Helvetica, Arial, sans-serif; */
+    line-height: 1.2rem;
+    font-size: 0.9rem;
+}
+
+section p::before {
+    content: '#';
+    position: absolute;
+    left: -20px;
+    transform: translateX(-100%);
+    color: var(--color-heading-before)
+
+}
+
+/* Shell Stuff */
+#console {
+    width: 100%;
+    padding: 20px;
+    bottom: 0;
+    position: fixed;
+    align-items: start;
+    gap: 10px;
+    opacity: 0.4;
+    transition: opacity 1s;
+}
+
+#console.interacted {
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+#console:not(.interacted) #shell-input #autocomplete {
+    opacity: 0.6;
+    transition: opacity 1s;
+}
+
+.shell {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+}
+
+.shell p {
+    margin: 0;
+}
+
+#shell-output {
+    display: flex;
+    flex-direction: column;
+}
+
+#shell-output a {
+    text-decoration: none;
+    color: var(--color-secondary-fg);
+}
+
+#shell-output a:hover {
+    text-decoration: underline;
+}
+
+#shell-output br.gap {
+    content: '';
+    margin: 2px;
+}
+
+#shell-output a.dir {
+    color: var(--color-secondary-accent);
+}
+
+#shell-input {
+    width: 100%;
+    cursor: text;
+}
+
+#shell-input #autocomplete {
+    bottom: 20px;
+    z-index: -1;
+    position: absolute;
+    opacity: 0.2;
+    transition: opacity 0.3s;
+}
+
+#shell-input #input,
+#shell-input #autocomplete {
+    white-space: pre;
+    vertical-align: middle;
+}
+
+#shell-input #cursor {
+    opacity: 1;
+    margin-left: calc(1px - 0.5em);
+    margin-top: -2px;
+    font-weight: 700;
+}
+
+#shell-input #cursor.cursor-blink {
+    animation: cursor-blink 1s infinite steps(2);
+}
+
+@keyframes cursor-blink {
+    0% {
+        opacity: 1;
+    }
+    49% {
+        opacity: 1;
+    }
+    51% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
