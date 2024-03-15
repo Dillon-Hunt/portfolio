@@ -4,7 +4,7 @@
     --color-primary-accent: #6b59ec;
     --color-secondary-accent: #788bff;
 
-    --page-padding: 20px 25vw 20px 25vw;
+    --page-padding: 0 25vw;
 }
 
 * {
