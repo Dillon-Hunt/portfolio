@@ -1,18 +1,12 @@
 // Commands to add
-// 1. ls
-// 2. ls -a (hidden files)
-// 2. cd
-// 3. cat
-// 4. clear
-// 5. help
-// 6. exit
-// 7. echo
-// 8. history
-// 9. pwd (print working directory)
+// 1. help
+// 2. exit
+// 3. history
+// 4. pwd (print working directory)
 
 // Ideas
+// Environment variables (eg. $PWD, $HOME) to be used in echo commands
 // History stored in local storage
-// Autocomplete
 // Allow users to mkdir
 // Allow users to touch
 // Allow users to rm?
@@ -24,6 +18,7 @@ const LETTERS =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
     '1234567890' +
     '.,;:!?-+*/=()[]{}' +
+    '$' +
     ' ';
 
 let typing_indicator = false;

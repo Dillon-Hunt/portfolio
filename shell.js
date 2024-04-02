@@ -3,6 +3,8 @@ file = path[path.length - 1].split('.')[0];
 article = document.querySelector('article');
 autocomplete = document.querySelector(' #shell-input #autocomplete');
 
+available_commands = ['ls', 'ls -a', 'cd', 'clear', 'echo'];
+
 hidden_directories = ['.', '..'];
 
 directories = [];
@@ -60,7 +62,6 @@ function ls_a() {
     });
 }
 
-
 // Will Need To Adjust Logic of cat() and cd() slightly if adding .files
 function cat(command) {
     cat_location = command.split(' ')[1];
@@ -69,7 +70,6 @@ function cat(command) {
         window.location.replace(`./${path[path.length - 1]}#${cat_location}`);
     } else if (cd_locations.includes(cat_location)) {
         new_line_a(`cat: ${cat_location}: Is a directory`);
-
     } else {
         new_line_a(`cat: ${cat_location}: No such file or directory`);
     }
@@ -92,18 +92,97 @@ function cd(command) {
     }
 }
 
-function clear_output() {
+function get_echo(command) {
+    let message = command.startsWith('echo')
+        ? command.replace('echo', '')
+        : command;
+    let replacements = {};
+    let errorMessage = null;
+
+    // const regex = /\$\((.*?)\)/g;
+    const regex = /\$\((?:[^()]|\([^()]*\))*\)/g; // Thanks ChatGPT
+    const matches = message.match(regex);
+
+    if (matches) {
+        if (matches.includes('$(clear)')) {
+            clear();
+            return ['', errorMessage];
+        }
+
+        matches.forEach((match) => {
+            if (!errorMessage) {
+                let sub_command = match.slice(2, -1);
+
+                let replacement = '';
+
+                switch (sub_command) {
+                    case 'ls': // TODO
+                        break;
+                    case 'ls -a': // TODO
+                        break;
+                    case 'cd':
+                    case 'echo':
+                        break; // Do nothing
+                    case 'clear':
+                        console.error('Something went wrong', command);
+                        break;
+                    default:
+                        const sub_command_base = sub_command.split(' ')[0];
+
+                        switch (sub_command_base) {
+                            case 'cd':
+                                break; // Do nothing
+                            case 'echo':
+                                const echo_result = get_echo(sub_command);
+                                replacement = echo_result[0];
+                                if (!errorMessage) {
+                                    errorMessage = echo_result[1];
+                                }
+                                break;
+                            case 'cat':
+                            case 'bat':
+                                replacement = document
+                                    .getElementById(sub_command.split(' ')[1])
+                                    .textContent.replace(/\n\s*/g, '');
+                                break;
+                            default:
+                                errorMessage = `command not found: ${sub_command_base}`;
+                                break;
+                        }
+                        break;
+                }
+
+                replacements[match] = replacement;
+            }
+        });
+
+        Object.keys(replacements).forEach((key) => {
+            message = message.replaceAll(key, replacements[key]);
+        });
+    }
+
+    return [message, errorMessage];
+}
+
+function echo(command) {
+    const echo_result = get_echo(command);
+    if (echo_result[1]) new_line(echo_result[1], 'error');
+    else new_line(echo_result[0], 'plain');
+}
+
+function clear() {
     document.querySelector('#shell-output').textContent = '';
 }
 
 function execute_command(command) {
     command = command.trim();
+    command_base = command.split(' ')[0];
 
     new_gap();
     new_line(`~ ${command}`, 'command');
 
-    switch (command.split(' ')[0]) {
-        case 'ls':
+    switch (command_base) {
+        case 'ls': // Currently unable to ls a directory
             if (command === 'ls -a') {
                 ls_a();
                 ls();
@@ -114,13 +193,13 @@ function execute_command(command) {
             }
             break;
         case 'cat':
+        case 'bat':
             if (command.split(' ').length <= 2) {
                 cat(command);
             } else {
-                new_line('cat: too many arguments', 'error');
+                new_line(`${command_base}: too many arguments`, 'error');
             }
             break;
-
         case 'cd':
             if (command.split(' ').length <= 2) {
                 cd(command);
@@ -130,19 +209,19 @@ function execute_command(command) {
             break;
         case 'clear':
             if (command.split(' ').length == 1) {
-                clear_output();
+                clear();
             } else {
                 new_line('clear: too many arguments', 'error');
             }
             break;
-
+        case 'echo':
+            echo(command);
+            break;
         default:
-            new_line(`command not found: ${command}`);
+            new_line(`command not found: ${command_base}`);
             break;
     }
 }
-
-available_commands = ['ls', 'ls -a', 'cd', 'clear', 'echo'];
 
 function update_autocomplete(command) {
     command = command.trim();
@@ -159,19 +238,24 @@ function update_autocomplete(command) {
         }
     }
 
-    if (command.startsWith('cd')) {
-        suggested_location = [
-            ...directories,
-            ...hidden_directories,
-        ].filter((location) => location.startsWith(command.split(' ')[1]))[0];
-        autocomplete.textContent = `cd ${suggested_location || ''}`;
-    } else if (command.startsWith('cat')) {
-        suggested_location = [
-            ...section_ids,
-        ].filter((location) => location.startsWith(command.split(' ')[1]))[0];
-        autocomplete.textContent = `cat ${suggested_location || ''}`;
-    } else {
-        autocomplete.textContent = '';
+    const command_base = command.split(' ')[0];
+
+    switch (command_base) {
+        case 'cd':
+            suggested_location = [...directories, ...hidden_directories].filter(
+                (location) => location.startsWith(command.split(' ')[1])
+            )[0];
+            autocomplete.textContent = `${command_base} ${suggested_location || ''}`;
+            break;
+        case 'cat':
+        case 'bat':
+            suggested_file = [...section_ids].filter((file) =>
+                file.startsWith(command.split(' ')[1])
+            )[0];
+            autocomplete.textContent = `${command_base} ${suggested_file || ''}`;
+            break;
+        default:
+            autocomplete.textContent = '';
     }
 }
 
