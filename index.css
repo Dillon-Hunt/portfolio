@@ -57,7 +57,7 @@ main {
 /* Article Stuff */
 article {
     width: 100%;
-    padding: var(--page-padding);
+    padding: var(--padding-page);
 }
 
 section {
@@ -93,7 +93,7 @@ section p.heading-comment .code-block {
     background-color: var(--color-heading-before);
     color: var(--color-secondary-bg);
     border-radius: 4px;
-    padding: 0 3px;
+    padding: 2px 4px;
 }
 
 section p.heading-comment::before {
@@ -122,8 +122,19 @@ section p.show-md::before {
 
 }
 
+section .footnotes {
+    counter-reset: footnoteCounter;
+    padding-top: 20px;
+}
+
+section .footnotes p.footnote {
+    position: relative;
+    margin: 0.5rem 0;
+}
+
 section p.footnote::before {
-    content: '*';
+    counter-increment: footnoteCounter;
+    content: '[' counter(footnoteCounter) ']';
     position: absolute;
     left: -20px;
     transform: translateX(-100%);
@@ -135,7 +146,7 @@ section p.footnote::before {
     color: var(--color-primary-bg);
     background-color: var(--color-highlight);
     border-radius: 4px;
-    padding: 0 3px;
+    padding: var(--padding-highlight);
 }
 
 .note {

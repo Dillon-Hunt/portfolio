@@ -6,7 +6,8 @@
 
     --color-highlight: yellow;
 
-    --page-padding: 0 25vw;
+    --padding-page: 0 25vw;
+    --padding-highlight: 2px 4px;
 }
 
 * {
@@ -50,6 +51,24 @@ h2 {
 
 a {
     color: var(--color-primary-cta);
+}
+
+sup {
+    padding: 0 0 0 0.1rem;
+}
+
+footer {
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-secondary-fg);
+}
+
+svg.wtfpl {
+    height: calc(0.8rem - 4px);
+    width: 0.8rem;
+    margin: 4px 0 0 0;
+    fill: var(--color-secondary-fg);
 }
 
 .centre {
@@ -109,10 +128,14 @@ a {
         /* --color-heading-before: #26293a; */
         --color-heading-before: #414663;
     }
+
+    /* .wtfpl::before { */
+    /*     filter: brightness(0.5) invert(1); */
+    /* } */
 }
 
 @media (max-width: 1000px) {
     :root {
-        --page-padding: 0 calc(5vw + 3rem);
+        --padding-page: 0 calc(5vw + 3rem);
     }
 }
