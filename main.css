@@ -110,7 +110,7 @@ svg.wtfpl {
 @media (prefers-color-scheme: light) or (prefers-color-scheme: no-preference) {
     :root {
         --color-primary-fg: #272222;
-        --color-primary-bg: #ffffff;
+        --color-primary-bg: #e3e5e9;
         --color-secondary-fg: #181f37 /* #121212; */
         --color-secondary-bg: #eeeeee;
 
@@ -120,7 +120,7 @@ svg.wtfpl {
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-primary-fg: #ededed;
+        --color-primary-fg: ##e3e5e9;
         --color-primary-bg: #10131c; /* #050505; */
         --color-secondary-fg: #a8a8b9 /* #d4d4d8 */;
         --color-secondary-bg: #0d0e14; /* #0D0D0D; */ /* #171C28; */
