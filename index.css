@@ -113,13 +113,44 @@ section p {
     font-size: 0.9rem;
 }
 
-section p::before {
+section p.show-md::before {
     content: '#';
     position: absolute;
     left: -20px;
     transform: translateX(-100%);
     color: var(--color-heading-before)
 
+}
+
+section p.footnote::before {
+    content: '*';
+    position: absolute;
+    left: -20px;
+    transform: translateX(-100%);
+    color: var(--color-heading-before)
+
+}
+
+.highlight {
+    color: var(--color-primary-bg);
+    background-color: var(--color-highlight);
+    border-radius: 4px;
+    padding: 0 3px;
+}
+
+.note {
+    position: relative;
+    padding-left: 20px;
+}
+
+.note::before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    background-color: var(--color-highlight);
+    border-radius: 1px;
+    width: 2px;
+    height: 100%;
 }
 
 /* Shell Stuff */
@@ -218,5 +249,16 @@ section p::before {
     }
     100% {
         opacity: 0;
+    }
+}
+
+@media (max-width: 1000px) {
+    /* Disable While Testing */
+    /* #console { */
+    /*     display: none; */
+    /* } */
+
+    .heading-comment {
+        display: none;
     }
 }

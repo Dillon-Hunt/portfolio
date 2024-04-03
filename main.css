@@ -4,6 +4,8 @@
     --color-primary-accent: #6b59ec;
     --color-secondary-accent: #788bff;
 
+    --color-highlight: yellow;
+
     --page-padding: 0 25vw;
 }
 
@@ -104,6 +106,13 @@ a {
         --color-secondary-fg: #a8a8b9 /* #d4d4d8 */;
         --color-secondary-bg: #0d0e14; /* #0D0D0D; */ /* #171C28; */
 
-        --color-heading-before: #26293a;
+        /* --color-heading-before: #26293a; */
+        --color-heading-before: #414663;
+    }
+}
+
+@media (max-width: 1000px) {
+    :root {
+        --page-padding: 0 calc(5vw + 3rem);
     }
 }
