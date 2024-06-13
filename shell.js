@@ -1,5 +1,4 @@
-path = window.location.pathname.split('/');
-file = path[path.length - 1].split('.')[0];
+path = window.location.pathname;
 article = document.querySelector('article');
 autocomplete = document.querySelector(' #shell-input #autocomplete');
 
@@ -8,8 +7,9 @@ available_commands = ['ls', 'ls -a', 'cd', 'clear', 'echo'];
 hidden_directories = ['.', '..'];
 
 directories = [];
-switch (file) {
-    case 'index':
+switch (path) {
+    case '/':
+    case '/portfolio/':
         directories = [...directories, 'Photography', 'Projects'];
         break;
 }
@@ -62,21 +62,26 @@ function ls_a() {
     });
 }
 
-// Will Need To Adjust Logic of cat() and cd() slightly if adding .files
+// Might need to adjust the logic of cat() and cd() slightly if adding .file and ../
 function cat(command) {
-    cat_location = command.split(' ')[1];
+    cat_location = command.split(' ')[1].replace(/^\.\//, '');
 
     if (section_ids.includes(cat_location)) {
-        window.location.replace(`./${path[path.length - 1]}#${cat_location}`);
+        window.location.replace(
+            `${path[path.length - 1].replace(/^\/+/, '')}#${cat_location}`
+        );
     } else if (cd_locations.includes(cat_location)) {
-        new_line_a(`cat: ${cat_location}: Is a directory`);
+        new_line(`cat: ${cat_location}: Is a directory`, 'error');
     } else {
-        new_line_a(`cat: ${cat_location}: No such file or directory`);
+        new_line(`cat: ${cat_location}: No such file or directory`, 'error');
     }
 }
 
 function cd(command) {
-    cd_location = command.split(' ')[1].replace(/^\/+|\/+$/g, '');
+    cd_location = command
+        .split(' ')[1]
+        .replace(/^\/+|\/+$/g, '')
+        .replace(/^\.\//, '');
 
     if (section_ids.includes(cd_location)) {
         new_line_a(`cd: ${cd_location}: Not a directory`);
@@ -84,7 +89,6 @@ function cd(command) {
         if (cd_location === '..') {
             window.location.href = '../';
         } else if (directories.includes(cd_location)) {
-            console.log(`./${cd_location}`);
             window.location.href = `./${cd_location}`;
         }
     } else {
@@ -167,7 +171,7 @@ function get_echo(command) {
 function echo(command) {
     const echo_result = get_echo(command);
     if (echo_result[1]) new_line(echo_result[1], 'error');
-    else new_line(echo_result[0], 'plain');
+    else if (echo_result[0] !== '') new_line(echo_result[0], 'plain');
 }
 
 function clear() {
@@ -238,21 +242,27 @@ function update_autocomplete(command) {
         }
     }
 
-    const command_base = command.split(' ')[0];
+    const command_base = command.split(' ')[0]; // Extract command.split(' ') as a variable
 
     switch (command_base) {
         case 'cd':
             suggested_location = [...directories, ...hidden_directories].filter(
-                (location) => location.startsWith(command.split(' ')[1])
+                (location) =>
+                    command.length === 2 ||
+                    location.startsWith(
+                        command.split(' ')[1]?.replace(/^\.\//, '')
+                    )
             )[0];
-            autocomplete.textContent = `${command_base} ${suggested_location || ''}`;
+            autocomplete.textContent = `${command_base} ${command.split(' ')[1]?.startsWith('./') ? `./${suggested_location || ''}` : suggested_location || ''}`;
             break;
         case 'cat':
         case 'bat':
-            suggested_file = [...section_ids].filter((file) =>
-                file.startsWith(command.split(' ')[1])
+            suggested_file = [...section_ids].filter(
+                (file) =>
+                    command.length === 3 ||
+                    file.startsWith(command.split(' ')[1]?.replace(/^\.\//, ''))
             )[0];
-            autocomplete.textContent = `${command_base} ${suggested_file || ''}`;
+            autocomplete.textContent = `${command_base} ${command.split(' ')[1]?.startsWith('./') ? `./${suggested_file || ''}` : suggested_file || ''}`;
             break;
         default:
             autocomplete.textContent = '';

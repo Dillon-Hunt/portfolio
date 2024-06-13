@@ -4,10 +4,17 @@
     --color-primary-accent: #6b59ec;
     --color-secondary-accent: #788bff;
 
-    --color-highlight: yellow;
+    --color-highlight: var(--color-primary-accent); /* yellow; */
+
+    --border: 5px;
 
     --padding-page: 0 25vw;
     --padding-highlight: 2px 4px;
+
+    --size-80: 0.8rem;
+    --size-100: 1rem;
+    --size-150: 1.5rem;
+    --size-200: 2rem;
 }
 
 * {
@@ -106,6 +113,48 @@ svg.wtfpl {
     -webkit-text-fill-color: transparent;
 }
 
+.highlight {
+    color: var(--color-primary-bg);
+    background-color: var(--color-highlight);
+    border-radius: 4px;
+    padding: var(--padding-highlight);
+}
+
+.note {
+    position: relative;
+    padding-left: 20px;
+}
+
+.note::before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    background-color: var(--color-highlight);
+    border-radius: 1px;
+    width: 2px;
+    height: 100%;
+}
+
+section .footnotes {
+    counter-reset: footnoteCounter;
+    padding-top: 20px;
+}
+
+section .footnotes p.footnote {
+    position: relative;
+    margin: 0.5rem 0;
+}
+
+section p.footnote::before {
+    counter-increment: footnoteCounter;
+    content: '[' counter(footnoteCounter) ']';
+    position: absolute;
+    left: -20px;
+    transform: translateX(-100%);
+    color: var(--color-heading-before)
+
+}
+
 /* Prefers light or no preference */
 @media (prefers-color-scheme: light) or (prefers-color-scheme: no-preference) {
     :root {
@@ -113,6 +162,7 @@ svg.wtfpl {
         --color-primary-bg: #e3e5e9;
         --color-secondary-fg: #181f37 /* #121212; */
         --color-secondary-bg: #eeeeee;
+        --color-tertiary-bg: #c0c1c9;
 
         --color-heading-before: var(--color-primary-accent);
     }
@@ -120,10 +170,11 @@ svg.wtfpl {
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-primary-fg: ##e3e5e9;
-        --color-primary-bg: #10131c; /* #050505; */
+        --color-primary-fg: #e3e5e9;
+        --color-primary-bg: #02071d; /*#10131c; /* #050505; */
         --color-secondary-fg: #a8a8b9 /* #d4d4d8 */;
-        --color-secondary-bg: #0d0e14; /* #0D0D0D; */ /* #171C28; */
+        --color-secondary-bg: #020617; /* #0d0e14; /* #0D0D0D; */ /* #171C28; */
+        --color-tertiary-bg: #111730;
 
         /* --color-heading-before: #26293a; */
         --color-heading-before: #414663;
