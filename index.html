@@ -73,6 +73,53 @@
                 <!--     <p class='footnote'>Footnotes will be displayed like this.</p> -->
                 <!-- </div> -->
             </section>
+
+            <section id='featured.md'>
+                <p class='heading-comment'>Here are a few of my favourite projects.</p>
+                <h2>featured</h2>
+
+                <div class="featured-projects">
+                    <div class="featured-project">
+                        <img src="./assets/featured/social-media-app.png" />
+                        <div class="project-details">
+                            <p class="project-name">Social Media App</p>
+                            <div class="project-tags"><p>React</p><p>Firebase</p><p>TypeScript</p></div>
+                            <p class="project-description">
+                            This was built as a personal project to create an Instagram-like social media platform to learn TypeScript.
+                            As well as TypeScript I also needed to interface with 3rd party systems like Firebase for authentication and
+                            data storage as well as Algolia for full-text search.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="featured-project">
+                        <img src="./assets/featured/cafe-web-app.svg" />
+                        <div class="project-details">
+                            <p class="project-name">Cafe Web App</p>
+                            <div class="project-tags"><p>React</p><p>Firebase</p><p>JavaScript</p></div>
+                            <p class="project-description">
+                                This online ordering app was made for an assignment for my year 12 Digital Solutions class
+                                focusing on the interaction between users and data. The system evolved a customer-facing ordering web app
+                                as well as a business-facing order management app to view and complete orders.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="featured-project">
+                        <img src="./assets/featured/ocean-watch.png" />
+                        <div class="project-details">
+                            <p class="project-name">Ocean Watch</p>
+                            <div class="project-tags"><p>NodeJS</p><p>Mapbox</p><p>SQL</p></div>
+                            <p class="project-description">
+                                This project for my Digital Solutions class was focused around data visualisation.
+                                The provided stimulus spreadsheet of shark attack data was imported into an SQL database via a NodeJS API.
+                                Mapbox was then used to display this data on an easy to navigate map to make this information accessible to the public.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id='projects.md'>
                 <p class='heading-comment'>To see more details on these projects try typing <span class='code-block'>cd Projects</span>.</p> <!--  then <span class='code-block'>cat &lt;PROJECT_NAME&gt;</span> -->
                 <h2>projects</h2>
@@ -96,6 +143,16 @@
 
                     <div class='year'>
                         <p class='label'>2023</p>
+                        <div class='project'>
+                            <p class="title">Ocean Watch</p>
+                            <p>A Mapbox application that charts all shark attacks and sightings via a NodeJS API and SQL database.</p>
+                            <div class="project-links">
+                                <a class="link-button" href="https://github.com/Dillon-Hunt/OceanWatch" target='_blank'>GitHub (UI)</a>
+                                <a class="link-button" href="https://github.com/Dillon-Hunt/OceanWatch-API" target='_blank'>GitHub (API)</a>
+                                <a class="link-button" href="./Projects/ocean-watch">Blog Post</a>
+                                <a class="link-button demo" href="https://study-minutes.web.app/" target='_blank'>Live Demo</a>
+                            </div>
+                        </div>
                         <div class='project'>
                             <p class="title">Study Minutes</p>
                             <p>A time tracking web app to record study time and track progress towards study goals.</p>
@@ -157,6 +214,7 @@
 
         <a href="#about.md" class='scroll'>&#xFE40;</a>
 
+        <script src='animation.js'></script>
         <script src='shell.js'></script>
         <script src='index.js'></script>
     </body>

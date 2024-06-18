@@ -8,11 +8,13 @@
 
     --border: 5px;
 
-    --padding-page: 0 25vw;
+    --padding-page-x: 25vw;
+    --padding-page: 0 var(--padding-page-x);
     --padding-highlight: 2px 4px;
 
     --size-80: 0.8rem;
     --size-100: 1rem;
+    --size-120: 1.2rem;
     --size-150: 1.5rem;
     --size-200: 2rem;
 }
@@ -187,6 +189,6 @@ section p.footnote::before {
 
 @media (max-width: 1000px) {
     :root {
-        --padding-page: 0 calc(5vw + 3rem);
+        --padding-page-x: calc(5vw + 3rem);
     }
 }
