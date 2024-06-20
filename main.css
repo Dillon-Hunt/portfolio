@@ -191,4 +191,8 @@ section p.footnote::before {
     :root {
         --padding-page-x: calc(5vw + 3rem);
     }
+
+    .heading-comment {
+        display: none;
+    }
 }

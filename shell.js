@@ -2,7 +2,17 @@ path = window.location.pathname;
 article = document.querySelector('article');
 autocomplete = document.querySelector(' #shell-input #autocomplete');
 
-available_commands = ['ls', 'ls -a', 'cd', 'clear', 'echo'];
+available_commands = ['bat', 'cat', 'cd', 'clear', 'echo', 'help', 'ls', 'ls -a'];
+available_commands_messages = [
+    'Jumps to a section (\'Prints\' page content to screen)',
+    'Equivalent to bat',
+    'Change directory',
+    'Clear the terminal screen',
+    'Output the arguments',
+    'This help message',
+    'List directory contents',
+    'List directory contents including hidden files',
+]
 
 hidden_directories = ['.', '..'];
 
@@ -11,6 +21,10 @@ switch (path) {
     case '/':
     case '/portfolio/':
         directories = [...directories, 'Photography', 'Projects'];
+        break;
+    case '/Projects/':
+    case '/portfolio/Projects/':
+        directories = [...directories, 'mini-links', 'ocean-watch', 'study-minutes', 'logic-gate-simulator', 'cafe-web-app', 'social-media-app'];
         break;
 }
 
@@ -78,6 +92,8 @@ function cat(command) {
 }
 
 function cd(command) {
+    if (command.split(' ').length === 1) return;
+
     cd_location = command
         .split(' ')[1]
         .replace(/^\/+|\/+$/g, '')
@@ -145,9 +161,14 @@ function get_echo(command) {
                                 break;
                             case 'cat':
                             case 'bat':
-                                replacement = document
-                                    .getElementById(sub_command.split(' ')[1])
-                                    .textContent.replace(/\n\s*/g, '');
+                                if (!document.getElementById(sub_command.split(' ')[1])) {
+                                    console.error('Something went wrong', command);
+                                    errorMessage = `${sub_command_base}: ${sub_command.split(' ')[1]}: No such file or directory`;
+                                } else {
+                                    replacement = document
+                                        .getElementById(sub_command.split(' ')[1])
+                                        .textContent.replace(/\n\s*/g, '');
+                                }
                                 break;
                             default:
                                 errorMessage = `command not found: ${sub_command_base}`;
@@ -178,6 +199,14 @@ function clear() {
     document.querySelector('#shell-output').textContent = '';
 }
 
+function help() {
+    new_line('Available commands:', 'plain');
+    available_commands.forEach((command, index) => {
+        new_line(`- ${command}: ${available_commands_messages[index]}`, 'plain');
+    });
+}
+
+
 function execute_command(command) {
     command = command.trim();
     command_base = command.split(' ')[0];
@@ -186,6 +215,9 @@ function execute_command(command) {
     new_line(`~ ${command}`, 'command');
 
     switch (command_base) {
+        case 'help':
+            help();
+            break;
         case 'ls': // Currently unable to ls a directory
             if (command === 'ls -a') {
                 ls_a();
@@ -231,7 +263,7 @@ function update_autocomplete(command) {
     command = command.trim();
 
     if (command.length === 0) {
-        autocomplete.textContent = available_commands[0];
+        autocomplete.textContent = available_commands[6];
         return;
     }
 

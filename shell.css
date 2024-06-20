@@ -1,0 +1,105 @@
+@media (max-width: 800px) {
+    #console {
+        display: none;
+    }
+}
+
+#console {
+    width: 100%;
+    padding: 20px;
+    bottom: 0;
+    position: fixed;
+    align-items: start;
+    gap: 10px;
+    opacity: 0.4;
+    transition: opacity 1s;
+    pointer-events: none;
+}
+
+#console.interacted {
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+#console:not(.interacted) #shell-input #autocomplete {
+    opacity: 0.6;
+    transition: opacity 1s;
+}
+
+.shell {
+    font-family: monospace;
+    font-weight: 900;
+    font-size: 0.75rem;
+}
+
+.shell p {
+    margin: 0;
+}
+
+#shell-output {
+    display: flex;
+    flex-direction: column;
+}
+
+#shell-output a {
+    text-decoration: none;
+    color: var(--color-secondary-fg);
+}
+
+#shell-output a:hover {
+    text-decoration: underline;
+}
+
+#shell-output br.gap {
+    content: '';
+    margin: 2px;
+}
+
+#shell-output a.dir {
+    color: var(--color-secondary-accent);
+}
+
+#shell-input {
+    width: 100%;
+    cursor: text;
+}
+
+#shell-input #autocomplete {
+    bottom: 20px;
+    z-index: -1;
+    position: absolute;
+    opacity: 0.2;
+    transition: opacity 0.3s;
+}
+
+#shell-input #input,
+#shell-input #autocomplete {
+    white-space: pre;
+    vertical-align: middle;
+}
+
+#shell-input #cursor {
+    opacity: 1;
+    margin-left: calc(1px - 0.5em);
+    margin-top: -2px;
+    font-weight: 700;
+}
+
+#shell-input #cursor.cursor-blink {
+    animation: cursor-blink 1s infinite steps(2);
+}
+
+@keyframes cursor-blink {
+    0% {
+        opacity: 1;
+    }
+    49% {
+        opacity: 1;
+    }
+    51% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}

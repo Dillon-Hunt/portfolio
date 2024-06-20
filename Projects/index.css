@@ -1,0 +1,13 @@
+main {
+    height: 40vh;
+    min-height: 400px;
+}
+
+section .projects .project h3 {
+    font-size: var(--size-120);
+}
+
+section .projects .project:not(:last-child) {
+    margin-bottom: 40px;
+    /* font-weight: 900; */
+}
