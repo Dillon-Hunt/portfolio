@@ -20,10 +20,10 @@ directories = [];
 switch (path) {
     case '/':
     case '/portfolio/':
-        directories = [...directories, 'Photography', 'Projects'];
+        directories = [...directories, 'photography', 'projects'];
         break;
-    case '/Projects/':
-    case '/portfolio/Projects/':
+    case '/projects/':
+    case '/portfolio/projects/':
         directories = [...directories, 'mini-links', 'ocean-watch', 'study-minutes', 'logic-gate-simulator', 'cafe-web-app', 'social-media-app'];
         break;
 }
