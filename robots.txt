@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: 
+Sitemap: https://dillon-hunt.com/sitemap.xml
