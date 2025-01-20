@@ -24,6 +24,24 @@
     background-image: url('./assets/email-black.svg');
 }
 
+.hero .portfolio-link {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    color: var(--color-secondary-fg);
+    text-decoration: none;
+    font-family: arial;
+}
+
+.hero .title {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    color: #a8a8b9;
+    text-decoration: none;
+    font-family: arial;
+}
+
 @media (prefers-color-scheme: dark) {
     .link#github {
         background-image: url('./assets/github-white.svg');
